@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SnoozeSquad — Because Your Friends Need An Intervention</title>
+  <meta name="description" content="Set a group alarm with your friends. Everyone gets woken up at the same time, no matter where they're sleeping." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ═══ LANDING VIEW ═══ -->
+  <div id="view-landing" class="view active">
+    <div class="landing-bg"></div>
+    <div class="landing-content">
+      <div class="logo-area">
+        <div class="logo-icon">⏰</div>
+        <h1 class="logo-text">SnoozeSquad</h1>
+        <p class="tagline">The only alarm your friends can't blame on each other.</p>
+      </div>
+
+      <div class="card glass">
+        <h2 class="card-title">Start a Squad</h2>
+        <p class="card-sub">Create a room, share the code, and set the alarm that ruins everyone's sleep simultaneously.</p>
+        <input id="create-name" type="text" placeholder="Your name (be honest)" maxlength="20" />
+        <button id="btn-create" class="btn btn-primary">Create Room 🚀</button>
+      </div>
+
+      <div class="divider"><span>or</span></div>
+
+      <div class="card glass">
+        <h2 class="card-title">Join the Chaos</h2>
+        <p class="card-sub">Someone sent you a code? Lucky you. Enter it below.</p>
+        <input id="join-name" type="text" placeholder="Your name" maxlength="20" />
+        <input id="join-code" type="text" placeholder="Room Code (e.g. A1B2C3)" maxlength="6" style="text-transform:uppercase;" />
+        <button id="btn-join" class="btn btn-secondary">Join Room 🤝</button>
+      </div>
+
+      <p id="landing-error" class="error-msg hidden"></p>
+    </div>
+  </div>
+
+  <!-- ═══ ROOM VIEW ═══ -->
+  <div id="view-room" class="view">
+    <header class="room-header">
+      <div class="header-left">
+        <span class="logo-icon-sm">⏰</span>
+        <span class="brand">SnoozeSquad</span>
+      </div>
+      <div class="header-center">
+        <span class="room-code-label">Room</span>
+        <span id="room-code-display" class="room-code">──────</span>
+        <button id="btn-copy-code" class="btn-icon" title="Copy code">📋</button>
+      </div>
+      <div class="header-right">
+        <span id="header-username" class="header-username"></span>
+      </div>
+    </header>
+
+    <main class="room-main">
+      <!-- Members Panel -->
+      <aside class="panel panel-members">
+        <h3 class="panel-title">😴 The Squad</h3>
+        <p class="panel-hint">Awake = dismissed the alarm. Still sleeping = judging you silently.</p>
+        <ul id="member-list" class="member-list"></ul>
+      </aside>
+
+      <!-- Center: Alarm Area -->
+      <section class="panel panel-center">
+        <!-- Active Alarm Banner -->
+        <div id="active-alarm-banner" class="active-alarm-banner hidden">
+          <div class="alarm-banner-icon">⏰</div>
+          <div class="alarm-banner-info">
+            <div id="alarm-banner-label" class="alarm-banner-label"></div>
+            <div id="alarm-banner-time" class="alarm-banner-time"></div>
+          </div>
+          <button id="btn-cancel-alarm" class="btn btn-danger btn-sm">Cancel ✕</button>
+        </div>
+
+        <!-- No alarm yet -->
+        <div id="no-alarm-msg" class="no-alarm-msg">
+          <div class="no-alarm-icon">🌙</div>
+          <p>No alarm set. Blissful ignorance.<br/><span class="muted">Propose a time below and let democracy decide your fate.</span></p>
+        </div>
+
+        <!-- Proposals -->
+        <div class="proposals-section">
+          <h3 class="section-title">🗳️ Proposals</h3>
+          <p class="section-hint">Everyone votes. Majority rules. No excuses.</p>
+          <ul id="proposals-list" class="proposals-list"></ul>
+          <div id="no-proposals-msg" class="muted-center">No proposals yet — someone has to be the responsible one.</div>
+        </div>
+
+        <!-- Add Proposal Form -->
+        <div class="add-proposal-form card glass-light">
+          <h3 class="form-title">📣 Propose an Alarm</h3>
+          <div class="form-row">
+            <input type="datetime-local" id="proposal-time" class="input-time" />
+            <input type="text" id="proposal-label" placeholder='Label (e.g. "Stand-up that could've been an email")' maxlength="50" />
+          </div>
+          <button id="btn-add-proposal" class="btn btn-primary">Propose It 📣</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- ═══ ALARM RING OVERLAY ═══ -->
+  <div id="alarm-overlay" class="alarm-overlay hidden">
+    <div class="alarm-overlay-inner">
+      <div class="alarm-ring-icon pulse">⏰</div>
+      <h2 class="alarm-ring-title">WAKE UP!</h2>
+      <p id="alarm-ring-label" class="alarm-ring-label"></p>
+      <p class="alarm-ring-sub">Your friends are seeing this too. You're all suffering equally. 😮‍💨</p>
+      <button id="btn-dismiss" class="btn btn-dismiss">I'm Awake 😵 Dismiss</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
